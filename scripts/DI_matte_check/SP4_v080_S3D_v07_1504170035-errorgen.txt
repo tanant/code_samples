@@ -1,0 +1,37 @@
+# will ignore lines beginning with hash
+# so feel free to comment out things you can't be bothered working with. 
+# it will also skip blank lines now.
+# (NOTE: Expects TAB SEPARATED cols)
+
+# baiscally, this is the list of things I can pick up so far as errors. Some are pretty subtle :P
+# also, the only lines I'm analysing are the ones WITH the keyword 'spool' in them, and WITHOUT the keyword 'matte'
+
+# Example of no eyes
+0	191	%C/fury_road/source/000S3D/mono_base/SP4_v080_base/%R/SP4_v080_base.%.7F.dpx
+0	191	%C/fury_road/source/000S3D/mono_base/SP4_v080_base/%R/SP4_v080_base.%.7F.dpx
+
+# Example of a mismatch between the dir and the file (pqc_v44 vs v43 in the first row)
+1	2	%C/fury_road/source/000S3D/spool04/pqc_044_v001_opt_v01_s024/%R/right/pqc_043_v001_opt_v01_r_s024.%.7F.dpx
+1	2	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s024/%R/left/pqc_043_v001_opt_v01_l_s024.%.7F.dpx
+
+# example of your sources being right, but mismatch in the block
+12832	22870	%C/fury_road/source/000S3D/spool04/abc_044_v001_opt_v01_s024/%R/right/abc_044_v001_opt_v01_r_s024.%.7F.dpx
+12832	22870	%C/fury_road/source/000S3D/spool04/pqc_044_v001_opt_v01_s024/%R/left/pqc_044_v001_opt_v01_l_s024.%.7F.dpx
+
+22832	12870	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s027/%R/right/pqc_043_v001_opt_v01_r_s024.%.7F.dpx
+22832	12870	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s025/%R/left/pqc_043_v001_opt_v01_l_s024.%.7F.dpx
+
+# this is fine
+32832	12870	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s024/%R/right/pqc_043_v001_opt_v01_r_s024.%.7F.dpx
+32832	12870	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s024/%R/left/pqc_043_v001_opt_v01_l_s024.%.7F.dpx
+
+# but this has bad eyes
+34832	12870	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s024/%R/left/pqc_043_v001_opt_v01_r_s024.%.7F.dpx
+34832	12870	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s024/%R/left/pqc_043_v001_opt_v01_l_s024.%.7F.dpx
+
+# but this has bad eyes too!
+35832	12870	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s024/%R/right/pqc_043_v001_opt_v01_l_s024.%.7F.dpx
+35832	12870	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s024/%R/left/pqc_043_v001_opt_v01_l_s024.%.7F.dpx
+
+42832	12870	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s027/%R/right/pqc_043_v001_opt_v03_r_s024.%.7F.dpx
+42832	12870	%C/fury_road/source/000S3D/spool04/pqc_043_v001_opt_v01_s025/%R/left/pqc_043_v001_opt_v01_l_s024.%.7F.dpx

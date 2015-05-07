@@ -1,6 +1,10 @@
-# basically, hunt for the direction flag/keyword
-# if you find it, we assume you set it so we don't touch
-# otherwise, we just flip the defaults.
+# anthony.tan@greenworm.net for FuryFX
+# 18/12/2013
+#
+# translates old-style tde4 nodes into new-style LDPK 1.7 LD nodes
+# Comment/setting preserving 
+# note: direction default is opposite to old TDE4 node!
+
 proc tde4_ldp_classic_3de_mixed {arg} { 
     set distortflag 0
     set labelflag 0

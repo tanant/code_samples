@@ -21,7 +21,6 @@ after render:
 from __future__ import print_function
 
 import os
-import sys
 import re
 import shutil
 import nuke
@@ -86,7 +85,7 @@ class FrameCatcher(object):
             # bootstrapping is not multisystem aware.. which is fine actually.
             try:
                 os.makedirs(root_dir)
-            except OSError as e:
+            except OSError:
                 shutil.rmtree(root_dir)
                 os.makedirs(root_dir)
 
@@ -99,9 +98,11 @@ class FrameCatcher(object):
             for fc in self._catchers:
                 fc['frame_fragment'].setValue(framestring)
                 fc['root_fragment'].setValue(root_dir)
-                fc['out_file'].setValue('[value root_fragment]/[value name].[value frame_fragment]')
+                fc['out_file'].setValue(
+                    '[value root_fragment]/[value name].[value frame_fragment]')
                 fc['label'].setValue('[value out_file]')
-                fc['column_header'].setValue('[python nuke.thisNode().input(0).fullName()]')
+                fc['column_header'].setValue(
+                    '[python nuke.thisNode().input(0).fullName()]')
                 fc['disable'].setValue(False)
                 fc['monitor_enable'].setValue(True)
                 fc['write_enable'].setValue(True)
@@ -109,7 +110,7 @@ class FrameCatcher(object):
                 fc['clock'].setValue(not fc['clock'].value())
         else:
             # print("FALSE")
-            continue
+            pass
 
     def before_frame(self):
         """Function call before frame render in the Write node.
@@ -119,7 +120,7 @@ class FrameCatcher(object):
         """
         if self._enable:
             framestring = '{frm:0' + str(self._padding) + 'd}.txt'
-            framestring = framestring.format(frm=nuke.frame()+1)
+            framestring = framestring.format(frm=nuke.frame() + 1)
             for fc in self._catchers:
                 fc['frame_fragment'].setValue(framestring)
                 fc['monitor_enable'].setValue(True)
@@ -150,7 +151,7 @@ class FrameCatcher(object):
                     try:
                         os.remove(newname)
                     except:
-                        continue
+                        pass
 
                     # oh FFS. this assumes an output was generated, which
                     # isn't the case when you have unconnected read nodes
@@ -158,7 +159,7 @@ class FrameCatcher(object):
                     try:
                         os.rename(oldname, newname)
                     except:
-                        continue
+                        pass
 
             # we should deal with this. It's such an annoying fix required
             # this is a weird +1/-1 offset strangeness
@@ -172,14 +173,13 @@ class FrameCatcher(object):
             candidates = os.listdir(rootdir)
             candidates = [x for x in candidates
                           if os.path.isfile(os.path.join(rootdir, x)) and
-                             x.endswith(framestring)]
+                          x.endswith(framestring)]
             compacted_output = os.path.join(rootdir,
                                             newfile_prefix + '.' + framestring)
-
             try:
                 os.remove(compacted_output)
             except:
-                continue
+                pass
 
             with open(compacted_output, 'w') as fp_out:
                 for x in candidates:
@@ -290,7 +290,7 @@ def inject_nodeclass(node_class, after_here, move=True):
         except:
             # this whole try/except is to catch dots which don't
             # have a 'selected' attrib
-            continue
+            pass
     after_here['selected'].setValue(True)
     node = nuke.createNode(node_class, inpanel=False)
     return node

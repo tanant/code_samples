@@ -1,10 +1,9 @@
 # compatible with the 2.6.4 mayapy.exe interpreter if you need.
 
-import re
+
 import subprocess
 import sys
 import os
-import time
 import datetime
 
 
@@ -39,13 +38,13 @@ def _cleanup(list_of_subprocs, poll_interval=0.1):
         for x in list_of_subprocs:
             try:
                 if x.poll() is not None:
-                    spawn_slots.pop(spawn_slots.index(x))
+                    list_of_subprocs.pop(list_of_subprocs.index(x))
             except AttributeError:
                 # trap for the case when no procs are spawned, x will be None
                 # so x.poll() fails
-                spawn_slots.pop(spawn_slots.index(x))
+                list_of_subprocs.pop(list_of_subprocs.index(x))
 
-        if spawn_slots == []:
+        if list_of_subprocs == []:
             cleanup = True
 
 
@@ -100,7 +99,7 @@ def convert_dir(directory, overwrite=False, binary_override=None, spawn_instance
     except:
         continue
 
-    # we're going to allow multi-threaded spawning, this is default set to 4
+    # we're going to allow multi-threaded spawning, this is default set to 1
     # but can be overidden as part of the command string.
     spawn = spawn_instances
 
@@ -121,11 +120,11 @@ def convert_dir(directory, overwrite=False, binary_override=None, spawn_instance
     candidates = [x for x in sorted(os.listdir(basedir))
                   if x.split('.')[-1].lower() in accepted]
 
-    for idx, file in enumerate(candidates):
-        newfile = '.'.join(file.split('.')[0:-1] + ['jpg'])
+    for f in candidates:
+        newfile = '.'.join(f.split('.')[0:-1] + ['jpg'])
 
         # fire off the conversion command
-        src = os.path.join(basedir, file)
+        src = os.path.join(basedir, f)
         dest = os.path.join(targetdir, newfile)
         if os.path.exists(dest) and not overwrite:
             _info("skipping\n{dest}\n".format(dest=dest))

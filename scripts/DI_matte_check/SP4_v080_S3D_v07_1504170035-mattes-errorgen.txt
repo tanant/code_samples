@@ -1,0 +1,66 @@
+22557	22594	%C/fury_road/source/000S3D/spool04/caw_225_v015_ungraded_s038/%R/right/matte/caw_225_v015_ungraded_r_s038_m01.%.7F.tga
+22557	22594	%C/fury_road/source/000S3D/spool04/caw_225_v015_ungraded_s038/%R/right/matte/caw_225_v015_ungraded_r_s038_m01.%.7F.tga
+22557	22594	%C/fury_road/source/000S3D/spool04/caw_225_v015_ungraded_s038/%R/right/matte/caw_225_v015_ungraded_r_s038_m01.%.7F.tga
+22557	22594	%C/fury_road/source/000S3D/spool04/caw_225_v015_ungraded_s038/%R/right/matte/caw_225_v015_ungraded_r_s038_m01.%.7F.tga
+22557	22594	%C/fury_road/source/000S3D/spool04/caw_225_v015_ungraded_s038/%R/right/caw_225_v015_ungraded_r_s038.%.7F.dpx
+22557	22594	%C/fury_road/source/000S3D/spool04/caw_225_v015_ungraded_s038/%R/left/matte/caw_225_v015_ungraded_l_s038_m01.%.7F.tga
+22557	22594	%C/fury_road/source/000S3D/spool04/caw_225_v015_ungraded_s038/%R/left/matte/caw_225_v015_ungraded_l_s038_m01.%.7F.tga
+22557	22594	%C/fury_road/source/000S3D/spool04/caw_225_v015_ungraded_s039/%R/left/matte/caw_225_v015_ungraded_l_s038_m01.%.7F.tga
+22557	22594	%C/fury_road/source/000S3D/spool04/caw_225_v015_ungraded_s038/%R/left/matte/caw_225_v015_ungraded_l_s038_m01.%.7F.tga
+22557	22594	%C/fury_road/source/000S3D/spool04/caw_225_v015_ungraded_s038/%R/left/caw_225_v015_ungraded_l_s038.%.7F.dpx
+22557	22594	%C/fury_road/source/000S3D/mono_base/SP4_v080_base/%R/SP4_v080_base.%.7F.dpx
+22557	22594	%C/fury_road/source/000S3D/mono_base/SP4_v080_base/%R/SP4_v080_base.%.7F.dpx
+
+22595	22845	%C/fury_road/source/000S3D/spool04/caw_230_v039_s020/%R/right/matte/caw_230_v039_r_s020_m01.%.7F.tga
+22595	22845	%C/fury_road/source/000S3D/spool04/caw_230_v039_s020/%R/right/matte/caw_230_v039_r_s020_m01.%.7F.tga
+22595	22845	%C/fury_road/source/000S3D/spool04/caw_230_v039_s020/%R/right/matte/caw_230_v039_r_s020_m01.%.7F.tga
+22595	22845	%C/fury_road/source/000S3D/spool04/caw_230_v039_s020/%R/right/matte/caw_230_v039_r_s020_m01.%.7F.tga
+22595	22845	%C/fury_road/source/000S3D/spool04/caw_230_v039_s022/%R/right/caw_230_v039_r_s022.%.7F.dpx
+22595	22845	%C/fury_road/source/000S3D/spool04/caw_230_v039_s020/%R/left/matte/caw_230_v039_l_s020_m01.%.7F.tga
+22595	22845	%C/fury_road/source/000S3D/spool04/caw_230_v039_s020/%R/left/matte/caw_230_v039_l_s020_m01.%.7F.tga
+# note that this is a v34 matte. I'm saying that all matte versions must sync up
+22595	22845	%C/fury_road/source/000S3D/spool04/caw_230_v034_s020/%R/left/matte/caw_230_v034_l_s020_m01.%.7F.tga
+22595	22845	%C/fury_road/source/000S3D/spool04/caw_230_v039_s020/%R/left/matte/caw_230_v039_l_s020_m01.%.7F.tga
+
+22595	22845	%C/fury_road/source/000S3D/spool04/caw_230_v039_s022/%R/left/caw_230_v039_l_s022.%.7F.dpx
+22595	22845	%C/fury_road/source/000S3D/mono_base/SP4_v080_base/%R/SP4_v080_base.%.7F.dpx
+22595	22845	%C/fury_road/source/000S3D/mono_base/SP4_v080_base/%R/SP4_v080_base.%.7F.dpx
+22846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s049/%R/right/matte/caw_235_v027_ungraded_r_s049_m01.%.7F.tga
+22846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v026_ungraded_s049/%R/right/matte/caw_235_v027_ungraded_r_s049_m01.%.7F.tga
+22846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s049/%R/right/matte/caw_235_v027_ungraded_r_s049_m01.%.7F.tga
+22846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s049/%R/right/matte/caw_235_v027_ungraded_r_s049_m01.%.7F.tga
+22846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s049/%R/right/caw_235_v027_ungraded_r_s049.%.7F.dpx
+22846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s049/%R/left/matte/caw_235_v027_ungraded_l_s049_m01.%.7F.tga
+22846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s049/%R/left/matte/caw_235_v027_ungraded_l_s049_m01.%.7F.tga
+22846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s049/%R/left/matte/caw_235_v027_ungraded_l_s049_m01.%.7F.tga
+22846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s049/%R/left/matte/caw_235_v027_ungraded_l_s049_m01.%.7F.tga
+22846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s049/%R/left/caw_235_v027_ungraded_l_s049.%.7F.dpx
+22846	22918	%C/fury_road/source/000S3D/mono_base/SP4_v080_base/%R/SP4_v080_base.%.7F.dpx
+22846	22918	%C/fury_road/source/000S3D/mono_base/SP4_v080_base/%R/SP4_v080_base.%.7F.dpx
+22919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+22919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+22919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+22919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+22919	22988	%C/fury_road/source/000S3D/spool04/caw_240_v021_ungraded_s014/%R/right/caw_240_v021_ungraded_r_s014.%.7F.dpx
+22919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+22919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+22919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+22919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+22919	22988	%C/fury_road/source/000S3D/spool04/caw_240_v021_ungraded_s014/%R/left/caw_240_v021_ungraded_l_s014.%.7F.dpx
+
+32919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+32919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+32919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+32919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+32919	22988	%C/fury_road/source/000S3D/spool04/caw_240_v021_ungraded_s014/%R/right/caw_240_v021_ungraded_r_s014.%.7F.dpx
+32919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+32919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+32919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+32919	22988	%C/fury_road/source/000VFX/caw_240_v021/%R/matte/caw_240_v021.%.4F.tga
+32919	22988	%C/fury_road/source/000S3D/spool04/caw_240_v021_ungraded_s014/%R/left/caw_240_v021_ungraded_l_s014.%.7F.dpx
+
+# there's a caw st ver 049 avail
+42846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s048/%R/right/matte/caw_235_v027_ungraded_r_s048_m01.%.7F.tga
+42846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s048/%R/right/matte/caw_235_v027_ungraded_r_s048_m01.%.7F.tga
+42846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s048/%R/left/matte/caw_235_v027_ungraded_l_s048_m01.%.7F.tga
+42846	22918	%C/fury_road/source/000S3D/spool04/caw_235_v027_ungraded_s048/%R/left/matte/caw_235_v027_ungraded_l_s048_m01.%.7F.tga
