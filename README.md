@@ -5,8 +5,6 @@ For anyone who is curious as to see what I get up to, how I think in python, and
 
 As at _7/5/2015_, included in this stack is:
 
-C++/Nuke API
-------------
 **FrameCatcher** : Nuke/C++/Python plugin and associated glue code (compiles against Nuke 7, 8) to intercept tree calls and work out what frames are being used downstream.
 
 **maya_python_UDIM** - a snippet of code posted on the python_inside_maya mailing list demonstrating how to analyse a mesh's UVs and work out what UDIM tiles are occupied. Done as a timing/approach test, so equivalent functions written against PyMEL, maya.cmds and the Python API 1.0
