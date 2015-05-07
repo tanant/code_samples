@@ -1,22 +1,18 @@
 #!/usr/bin/python
 
-# accepts three arguments, the first is the input EDL, the second is an input CSV from filemaker
-# the third is optional and is the name of the file to write. If omitted, defaults to 'report.csv'
-# will provide results which should show the entirety of the CSV and EDL supplied
+# accepts three arguments, the first is the input EDL, the second is an
+# input CSV from filemaker the third is optional and is the name of the file
+# to write. If omitted, defaults to 'report.csv' will provide results which
+# should show the entirety of the CSV and EDL supplied
 
 
-'''
-Created on 12/09/2013
-
-@author: OM005188
-'''
 import re
-import math
-import os
 import sys
 import csv
 
+
 class FM_CSV(object):
+    """Class to encapsulate a Filemaker CSV export"""
 
     def __init__(self, fname):
         self.sourcefile = fname
@@ -47,8 +43,10 @@ class FM_CSV(object):
             raise ZeroCSV('Empty CSV?')
 
     def __str__(self):
-        report = "\"{title}\": {numclips} clips".format(title=self.sourcefile, numclips=len(self.clips))
+        report = "\"{title}\": {numclips} clips".format(
+            title=self.sourcefile, numclips=len(self.clips))
         return report
+
 
 class Error(Exception):
 
@@ -58,11 +56,14 @@ class Error(Exception):
     def __str__(self):
         return repr(self.value)
 
+
 class BadFile(Error):
     pass
 
+
 class ZeroCSV(Error):
     pass
+
 
 class EDL(object):
 
@@ -103,35 +104,47 @@ class EDL(object):
         return nextline
 
     def _load_clips(self):
-        # FIXME: for performance you should call re.compile on these outside of the line loop:
+        re_clipstartstring = re.compile(r'\s*',  # any num of spaces
+                                        # a string of digits then at least one
+                                        # space
+                                        r'(?P<edit_num>[0-9]+)\s+',
+                                        # a string of non-space things,
+                                        # then at least one space
+                                        r'(?P<name>[^\s]+)\s+',
+                                        # a string of non-space things,
+                                        # then at least one space
+                                        r'(?P<source>[^\s]+)\s+',
+                                        r'(?P<transfer>[^\s]+)\s+',
+                                        r'(?P<src_in>[^\s]+)\s+',
+                                        r'(?P<src_out>[^\s]+)\s+',
+                                        r'(?P<edit_in>[^\s]+)\s+',
+                                        r'(?P<edit_out>[^\s]+)\s+',
+                                        r'$')  # and nothing else
 
-        re_clipstartstring = (r'\s*',                       # any number of spaces (front pad)
-                              r'(?P<edit_num>[0-9]+)\s+',   # a string of digits, then at least one space
-                              r'(?P<name>[^\s]+)\s+',       # a string of non-space things, then at least one space
-                              r'(?P<source>[^\s]+)\s+',   # a string of non-space things, then at least one space
-                              r'(?P<transfer>[^\s]+)\s+',   # etc
-                              r'(?P<src_in>[^\s]+)\s+',
-                              r'(?P<src_out>[^\s]+)\s+',
-                              r'(?P<edit_in>[^\s]+)\s+',
-                              r'(?P<edit_out>[^\s]+)\s+',
-                              r'$')                        # and nothing else
+        re_ascsop = re.compile(r'\s*\*\s*',  # a star, with or without spaces
+                               # case insensitive magic ASC_SOP match
+                               r'(?i)ASC_SOP\s+',
+                               # triplets of within parentheses
+                               r'\((?P<slope>[0-9.-]+\s+[0-9.-]+\s+[0-9.-]+)\)\s*',
+                               # triplets of within parentheses
+                               r'\((?P<offset>[0-9.-]+\s+[0-9.-]+\s+[0-9.-]+)\)\s*',
+                               # triplets of within parentheses
+                               r'\((?P<power>[0-9.-]+\s+[0-9.-]+\s+[0-9.-]+)\)\s*',
+                               r'$')  # and nothing else
 
-        re_ascsop = (r'\s*\*\s*',                                    # a star, with or without spaces
-                     r'(?i)ASC_SOP\s+',                              # case insensitive magic ASC_SOP match
-                     r'\((?P<slope>[0-9.-]+\s+[0-9.-]+\s+[0-9.-]+)\)\s*',  # triplets of within parentheses
-                     r'\((?P<offset>[0-9.-]+\s+[0-9.-]+\s+[0-9.-]+)\)\s*',  # triplets of within parentheses
-                     r'\((?P<power>[0-9.-]+\s+[0-9.-]+\s+[0-9.-]+)\)\s*',  # triplets of within parentheses
-                     r'$')                                          # and nothing else
+        re_ascsat = re.compile(r'\s*\*\s*',  # a star, with or without spaces
+                               # case insensitive magic ASC_SAT match
+                               r'(?i)ASC_SAT\s+',
+                               # triplets of numbers within parentheses
+                               r'\((?P<saturation>[0-9.-]+\s+[0-9.-]+\s+[0-9.-]+)\)\s*',
+                               r'$')  # and nothing else
 
-        re_ascsat = (r'\s*\*\s*',                            # a star, with or without spaces
-                         r'(?i)ASC_SAT\s+',                      # case insensitive magic ASC_SAT match
-                         r'\((?P<saturation>[0-9.-]+\s+[0-9.-]+\s+[0-9.-]+)\)\s*',  # triplets of numbers within parentheses
-                         r'$')                                  # and nothing else
-
-        re_fromclip = (r'\s*\*\s*',                           # a star, with or without spaces
-                       r'(?i)FROM CLIP NAME:',                 # magic opening statement
-                       r'(?P<from_clip_name>.+)',              # whatever you've got on the line
-                       r'$')                                  # all the way to EOL
+        re_fromclip = re.compile(r'\s*\*\s*',  # a star, with or without spaces
+                                 # magic opening statement
+                                 r'(?i)FROM CLIP NAME:',
+                                 # whatever you've got on the line
+                                 r'(?P<from_clip_name>.+)',
+                                 r'$')  # all the way to EOL
 
         understood = [re_ascsop, re_ascsat, re_fromclip, re_clipstartstring]
 
@@ -143,43 +156,39 @@ class EDL(object):
 
         # bootstrap phase, hunt for the first clip
         while not exhausted:
-
             line = self._nextline()
-
             if line is None:
-                # FIXME: I think you want to 'break' here
                 exhausted = True
+                break
             elif not line.strip():  # skip blank lines
-                # FIXME: I think you want a 'continue' here
-                pass
+                continue
 
-            # FIXME: if line is None: this will fail (which is why you need the break above):
             result = re.search(re_clipstartstring, line)
             if result is not None:
                 self._seek_back()
                 break
             else:
-                self.header_unparsed.append((line, self._raw_pos + 1))   # we consider this header junk
+                # we consider this header junk
+                self.header_unparsed.append((line, self._raw_pos + 1))
 
-        # now we've bootstrapped so we can guarantee the next call here will be an re_clipstart
+        # now we've bootstrapped so we can guarantee the next call here will be
+        # an re_clipstart
         while not exhausted:
             line = self._nextline()
 
             if line is None:
-                if name in current_clip:
+                if 'name' in current_clip.keys():
                     # there's data here waiting to be flushed, flush it
                     self.clips.append(current_clip)
                 # we're done
                 break
 
             if not line.strip():  # skip blank lines
-                # FIXME: I think you want a 'continue' here
-                # pass
                 continue
 
             # find out which re_matches the line
             for re_command in understood:
-                result = re.search(re_command, line)
+                result = re_command.search(line)
                 if result is not None:
                     break
             else:
@@ -188,17 +197,22 @@ class EDL(object):
                 continue
 
             if re_command == re_ascsop:
-                current_clip['slope'] = map(float, result.group('slope').split())
-                current_clip['offset'] = map(float, result.group('offset').split())
-                current_clip['power'] = map(float, result.group('power').split())
+                current_clip['slope'] = map(
+                    float, result.group('slope').split())
+                current_clip['offset'] = map(
+                    float, result.group('offset').split())
+                current_clip['power'] = map(
+                    float, result.group('power').split())
             elif re_command == re_ascsat:
-                current_clip['saturation'] = map(float, result.group('saturation'))
+                current_clip['saturation'] = map(
+                    float, result.group('saturation'))
             elif re_command == re_fromclip:
-                current_clip['from_clip_name'] = result.group('from_clip_name').strip()
+                current_clip['from_clip_name'] = result.group(
+                    'from_clip_name').strip()
             elif re_command == re_clipstartstring:
                 # the canary/key is 'name'
 
-                if name in current_clip:
+                if 'name' in current_clip.keys():
                     # there's data here waiting to be flushed, flush it
                     self.clips.append(current_clip)
                     current_clip = {}
@@ -213,7 +227,8 @@ class EDL(object):
     def _load_header(self):
         # ignore empty lines
         re_titlestring = r'^\s*TITLE:\s+(?P<title>.+)\s+'
-        re_endheaderstring = r'\s*[0-9]+\s+'    # anything that begins with a numeric ID
+        # anything that begins with a numeric ID
+        re_endheaderstring = r'\s*[0-9]+\s+'
 
         exhausted = False
         while not exhausted:
@@ -224,9 +239,11 @@ class EDL(object):
                 pass
             elif self.title is None:   # this is a line to check
                 try:
-                    self.title = re.search(re_titlestring, line).group('title').rstrip()
+                    self.title = re.search(
+                        re_titlestring, line).group('title').rstrip()
                 except AttributeError:
-                    raise BadFile('something other than TITLE block found first')
+                    raise BadFile(
+                        'something other than TITLE block found first')
             elif not re.search(re_endheaderstring, line):
                 self.header_unparsed.append((line, self._raw_pos + 1))
             else:
@@ -235,70 +252,30 @@ class EDL(object):
         raise BadFile('non-conforming header')
 
     def __str__(self):
-        report = "\"{title}\": {numclips} clips".format(title=self.title, numclips=len(self.clips))
+        report = "\"{title}\": {numclips} clips".format(
+            title=self.title, numclips=len(self.clips))
         if self.header_unparsed != [] or self.body_unparsed != []:
-            report += ' ({x} unknown header lines, {y} unknown body lines)'.format(x=len(self.header_unparsed), y=len(self.body_unparsed))
+            report += ' ({x} unknown header lines, {y} unknown body lines)'.format(
+                x=len(self.header_unparsed), y=len(self.body_unparsed))
         return report
 
-def frame_to_timecode(frame, fps=24):
-    # dd hh mm ss ff
-    #              1
-    #          fps
-    #       60*fps
-    #    60*60*fps
-    # 24*60*60*fps
 
-    tc = []
-    remaining = frame
-    for x in [24 * 60 * 60 * fps, 60 * 60 * fps, 60 * fps, fps, 1]:
-        consumed = math.trunc(remaining / float(x))
-        remaining -= consumed * x
-        tfm_csv.append(consumed)
-
-    return '{dd:02d}:{hh:02d}:{mm:02d}:{ss:02d}.{ff:02d}'.format(dd=tc[0],
-                                                                 hh=tc[1],
-                                                                 mm=tc[2],
-                                                                 ss=tc[3],
-                                                                 ff=tc[4],
-                                                                 )
 def timecode_to_frame(timecodestring, fps=24):
     components = re.split(r'[^0-9]+', timecodestring)
 
-    # the reversal of the components is
-    # simply to take advantage of zip's halting condition
-    return sum(map(lambda x: int(x[0]) * int(x[1]), zip([24 * 60 * 60 * fps, 60 * 60 * fps, 60 * fps, fps, 1][::-1], components[::-1])))
+    # the reversal of the components is simply to take advantage of zip's
+    # halting condition
+    multipliers = [24 * 60 * 60 * fps,  # DD
+                   60 * 60 * fps,       # HH
+                   60 * fps,            # MM
+                   fps,                 # SS
+                   1]                   # FF
 
-
-def frame_to_timecode(frame, fps=24):
-    # dd hh mm ss ff
-    #              1
-    #          fps
-    #       60*fps
-    #    60*60*fps
-    # 24*60*60*fps
-
-    tc = []
-    remaining = frame
-    for x in [24 * 60 * 60 * fps, 60 * 60 * fps, 60 * fps, fps, 1]:
-        consumed = math.trunc(remaining / float(x))
-        remaining -= consumed * x
-        tfm_csv.append(consumed)
-
-    return '{dd:02d}:{hh:02d}:{mm:02d}:{ss:02d}:{ff:02d}'.format(dd=tc[0],
-                                                                 hh=tc[1],
-                                                                 mm=tc[2],
-                                                                 ss=tc[3],
-                                                                 ff=tc[4],
-                                                                 )
-def timecode_to_frame(timecodestring, fps=24):
-    components = re.split(r'[^0-9]+', timecodestring)
-
-    # the reversal of the components is
-    # simply to take advantage of zip's halting condition
-    # FIXME:  might be good to decompose this into a few lines for readability
-    return sum(map(lambda x: int(x[0]) * int(x[1]), zip([24 * 60 * 60 * fps, 60 * 60 * fps, 60 * fps, fps, 1][::-1], components[::-1])))
+    return sum(map(lambda x: int(x[0]) * int(x[1]), zip(multipliers[::-1], components[::-1])))
 
 # attach a new clipkey parameter
+
+
 class comparison_EDL(EDL):
 
     def get_clip_from_key(self, key):
@@ -315,23 +292,25 @@ class comparison_EDL(EDL):
         self.clipkeys = {}
         for index, clip in enumerate(self.clips):
 
-            key = (clip['from_clip_name'].lower()[0:13] + '::' + clip['name']).lower()
+            key = (clip['from_clip_name'].lower()[
+                   0:13] + '::' + clip['name']).lower()
             self.clipkeys[key] = index
             # print key
 
 if __name__ == '__main__':
-    import sys
     # edl = comparison_EDL(r'H:\user\anthony.tan\development\scripts\TO_048.edl')
     # for x in edl.clips:
     #    print x['name'], x['from_clip_name']
     #    print edl.clipkeys
 
     try:
-        #edl = comparison_EDL(sys.argv[1])
-        #fm_csv = FM_CSV(sys.argv[2])
+        # edl = comparison_EDL(sys.argv[1])
+        # fm_csv = FM_CSV(sys.argv[2])
 
-        edl = comparison_EDL(r'P:\FromEditorial\001_Turnovers\193\to_edls\to_193_edl_old.edl')
-        fm_csv = FM_CSV(r'P:\FromEditorial\001_Turnovers\193\to_edls\to_193.csv')
+        edl = comparison_EDL(
+            r'P:\FromEditorial\001_Turnovers\193\to_edls\to_193_edl_old.edl')
+        fm_csv = FM_CSV(
+            r'P:\FromEditorial\001_Turnovers\193\to_edls\to_193.csv')
         print edl
     except BadFile as e:
         print "ERROR: EDL could not be understood..."
@@ -367,7 +346,8 @@ if __name__ == '__main__':
         result['name'] = clip['scan_name']
         result['slate'] = clip['slate'].lower()[0:-4]
 
-        key = clip['scan_name'] + '::' + clip['slate'].lower()[0:-4]   # strip out the .ari extension
+        # strip out the .ari extension
+        key = clip['scan_name'] + '::' + clip['slate'].lower()[0:-4]
 
         print 'found --> ', key
         found_edl_clip = edl.get_clip_from_key(key.lower())
@@ -383,7 +363,8 @@ if __name__ == '__main__':
         result['csv_in_raw'] = clip['src_in']
         result['csv_out_raw'] = clip['src_out']
         result['csv_duration_raw'] = clip['length']
-        result['csv_duration_calculated'] = timecode_to_frame(clip['src_out']) - timecode_to_frame(clip['src_in']) + 1
+        result['csv_duration_calculated'] = timecode_to_frame(
+            clip['src_out']) - timecode_to_frame(clip['src_in']) + 1
         if result['csv_duration_raw'] == result['csv_duration_calculated']:
             result['match_csv_duration_calculation'] = True
 
@@ -394,7 +375,8 @@ if __name__ == '__main__':
         if found_edl_clip is not None:
             result['edl_in_raw'] = found_edl_clip['src_in']
             result['edl_out_raw'] = found_edl_clip['src_out']
-            result['edl_duration_calculated'] = timecode_to_frame(found_edl_clip['src_out']) - timecode_to_frame(found_edl_clip['src_in'])
+            result['edl_duration_calculated'] = timecode_to_frame(
+                found_edl_clip['src_out']) - timecode_to_frame(found_edl_clip['src_in'])
 
             # and build the checks
 
@@ -406,7 +388,8 @@ if __name__ == '__main__':
             if result['csv_in_raw'] == result['edl_in_raw']:
                 result['match_in'] = True
 
-            if timecode_to_frame(result['csv_out_raw']) == timecode_to_frame(result['edl_out_raw']) - 1:  # EDLs are +1 frame inclined
+            # EDLs are +1 frame inclined
+            if timecode_to_frame(result['csv_out_raw']) == (timecode_to_frame(result['edl_out_raw']) - 1):
                 result['match_out'] = True
 
             if result['match_out'] and \
@@ -442,7 +425,8 @@ if __name__ == '__main__':
 
         result['edl_in_raw'] = clip['src_in']
         result['edl_out_raw'] = clip['src_out']
-        result['edl_duration_calculated'] = timecode_to_frame(clip['src_out']) - timecode_to_frame(clip['src_in'])
+        result['edl_duration_calculated'] = timecode_to_frame(
+            clip['src_out']) - timecode_to_frame(clip['src_in'])
 
         report.append(result)
 
